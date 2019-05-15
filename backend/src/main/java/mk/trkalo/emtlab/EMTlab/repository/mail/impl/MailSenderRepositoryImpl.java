@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
 
 import javax.mail.MessagingException;
@@ -30,6 +31,7 @@ public class MailSenderRepositoryImpl implements MailSenderRepository {
 
 
     @Override
+    @Async
     public void sendHtmlMail(String to, String subject, String template, Map<String, String> params) throws MessagingException, IOException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);

@@ -1,6 +1,9 @@
 package mk.trkalo.emtlab.EMTlab.model;
 
 public enum Role {
-    USER,
-    ADMIN
+    ROLE_USER,
+    ROLE_MANAGER,
+    ROLE_ADMIN
+
+
 }
