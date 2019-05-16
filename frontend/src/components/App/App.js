@@ -1,23 +1,41 @@
 import React from 'react';
 import './App.css';
 import LoginRegister from "../LoginRegister/LoginRegister";
-import {BrowserRouter, Redirect, Route} from "react-router-dom";
+import {Route, withRouter} from "react-router-dom";
+import Dashboard from "../Dashboard/Dashboard";
 
-function App() {
-  return (
-    <BrowserRouter>
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            userToken: localStorage.getItem("userToken")
+        }
+    }
 
+    changeUserToken = (token) => {
+        if (token)
+            localStorage.setItem("userToken", token);
+        else {
+            this.props.history.push("/");
+            localStorage.removeItem("userToken")
+        }
+        this.setState({userToken: token});
+    };
 
-        <Route path={"/"} exact render={()=>{
-          let userKey = localStorage.getItem("userKey");
-          if (!userKey) return <Redirect to={"/auth"}/>;
+    render() {
+                const {userToken} = this.state;
+                return (
+                <div className={"h-100 p-5"} style={{background: "rgb(100,100,100)"}}>
+                <Route path={"/"} render={() => {
+                    if (!userToken)
+                        return <LoginRegister changeUserToken={this.changeUserToken}/>;
+                    else
+                        return <Dashboard changeUserToken={this.changeUserToken}/>;
+                }}/>
 
-        }} />
-
-        <Route path={"/auth"} component={LoginRegister}/>
-
-    </BrowserRouter>
-  );
+            </div>
+        );
+    }
 }
 
-export default App;
+export default withRouter(App);

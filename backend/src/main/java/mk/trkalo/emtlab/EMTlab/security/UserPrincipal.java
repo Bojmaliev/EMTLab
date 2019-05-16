@@ -1,6 +1,8 @@
 package mk.trkalo.emtlab.EMTlab.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import mk.trkalo.emtlab.EMTlab.model.Branch;
 import mk.trkalo.emtlab.EMTlab.model.Role;
 import mk.trkalo.emtlab.EMTlab.model.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,25 +19,23 @@ public class UserPrincipal implements UserDetails {
 
     public String name;
 
-    @JsonIgnore
-    public String email;
+    private String email;
 
     @JsonIgnore
     private String password;
 
+    public Branch branch;
+
     Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(User byEmail) {
-        id = byEmail.id;
-        email =  byEmail.email;
-        name = byEmail.name;
-        password = byEmail.password;
+    public UserPrincipal(User user) {
+        id = user.id;
+        email =  user.email;
+        name = user.name;
+        password = user.password;
         List<GrantedAuthority> auths = new ArrayList<>();
-
-        for(Role role : byEmail.roleList){
-            auths.add(new SimpleGrantedAuthority(role.toString()));
-
-        }
+        branch=user.branch;
+        auths.add(new SimpleGrantedAuthority(user.role.toString()));
         authorities = auths;
     }
 

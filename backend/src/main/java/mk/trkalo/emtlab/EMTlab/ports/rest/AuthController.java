@@ -3,13 +3,12 @@ package mk.trkalo.emtlab.EMTlab.ports.rest;
 
 import mk.trkalo.emtlab.EMTlab.model.User;
 import mk.trkalo.emtlab.EMTlab.model.payloads.request.LoginRequest;
-import mk.trkalo.emtlab.EMTlab.model.payloads.request.NewPassRequest;
+import mk.trkalo.emtlab.EMTlab.model.payloads.request.ForgotPassSubmitRequest;
 import mk.trkalo.emtlab.EMTlab.model.payloads.request.SignUpRequest;
 import mk.trkalo.emtlab.EMTlab.model.payloads.response.ApiResponse;
 import mk.trkalo.emtlab.EMTlab.model.payloads.response.JwtAuthenticationResponse;
 import mk.trkalo.emtlab.EMTlab.service.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -64,7 +63,7 @@ public class AuthController {
         return ResponseEntity.ok(new ApiResponse("Check your mail for link"));
     }
     @PostMapping("/change_password")
-    public ResponseEntity<?> changePassword(@RequestBody NewPassRequest req){
+    public ResponseEntity<?> changePassword(@RequestBody ForgotPassSubmitRequest req){
         userManagementService.changeUserPasswordWithToken(req);
         return ResponseEntity.ok(new ApiResponse("You changed your password successfully"));
     }

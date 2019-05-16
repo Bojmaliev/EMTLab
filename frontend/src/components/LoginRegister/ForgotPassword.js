@@ -50,7 +50,7 @@ class ForgotPassword extends React.Component{
                             Request new password
                         </Button>
                     </Form>}
-                        <Link to={"/auth"}>Return to login</Link>
+                        <Link to={"/"}>Return to login</Link>
                 </Card.Body>
             </Card>
 

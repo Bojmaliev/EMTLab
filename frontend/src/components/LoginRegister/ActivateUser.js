@@ -41,10 +41,10 @@ class ActivateUser extends React.Component{
                 <Card.Body>
                     <Card.Text>
                         <Alert variant={variant}>{this.state.message}</Alert>
-                        {this.state.redirect && <Redirect to={"/auth"}/>}
+                        {this.state.redirect && <Redirect to={"/"}/>}
                     </Card.Text>
                     <Card.Link>
-                        <Link to={"/auth"}>Login</Link>
+                        <Link to={"/"}>Login</Link>
                     </Card.Link>
                 </Card.Body>
             </Card>

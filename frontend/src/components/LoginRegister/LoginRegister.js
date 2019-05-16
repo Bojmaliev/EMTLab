@@ -13,21 +13,20 @@ class LoginRegister extends React.Component{
     render() {
         return (
             <BrowserRouter>
-            <div className={"h-100 bg-primary"}>
+
             <Container className="h-100">
             <Row className={"justify-content-md-center h-100"}>
                 <Col xs md={6} lg={5} className={"align-middle"} style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
 
-                    <Route path={"/auth"} exact component={Login} />
-                    <Route path={"/auth/register"} component={Register} />
-                    <Route path={"/auth/forgot-password"} exact component={ForgotPassword} />
-                    <Route path={"/auth/change-password/:userId/token/:token"} component={ChangeThePassword} />
-                    <Route path={"/auth/activate-user/:userId/token/:token"} component={ActivateUser} />
+                    <Route path={"/"} exact render={()=><Login changeUserToken={this.props.changeUserToken} />} />
+                    <Route path={"/register"} component={Register} />
+                    <Route path={"/forgot-password"} exact component={ForgotPassword} />
+                    <Route path={"/change-password/:userId/token/:token"} component={ChangeThePassword} />
+                    <Route path={"/activate-user/:userId/token/:token"} component={ActivateUser} />
 
                 </Col>
             </Row>
             </Container>
-            </div>
             </BrowserRouter>
         );
     }

@@ -1,18 +1,13 @@
 package mk.trkalo.emtlab.EMTlab.model;
 
 
-import mk.trkalo.emtlab.EMTlab.model.exceptions.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import mk.trkalo.emtlab.EMTlab.service.Methods;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.lang.Error;
-import java.nio.charset.Charset;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 @Entity
 public class User {
@@ -25,21 +20,24 @@ public class User {
     @NotNull
     @Column(unique=true)
     public String email;
+
     @NotNull
+    @JsonIgnore
     public String password;
 
     @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = Role.class)
-    public List<Role> roleList = new ArrayList<>();
+    public Role role = Role.ROLE_USER;
 
-    public boolean activated = false;
+    @ManyToOne
+    public Branch branch;
+
+    public Boolean activated = false;
 
     public LocalDateTime registeredOn;
 
     public String activationCode;
     public User(){
         registeredOn= LocalDateTime.now();
-        roleList.add(Role.ROLE_USER);
         activationCode = Methods.generateRandomString(50);
     }
     public static User createUser(String name, String email, String password)  {
@@ -65,5 +63,9 @@ public class User {
         if(activationCode == null || !activationCode.equals(token)) throw new Error("Invalid token!");
         this.activationCode = null;
         this.password=password;
+    }
+
+    public void setPassword(String validatedPassword) {
+        this.password=validatedPassword;
     }
 }

@@ -60,7 +60,7 @@ class ChangeThePassword extends React.Component{
                             Change your password
                         </Button>
                     </Form>}
-                    <Link to={"/auth"}>Return to login</Link>
+                    <Link to={"/"}>Return to login</Link>
                 </Card.Body>
             </Card>
 

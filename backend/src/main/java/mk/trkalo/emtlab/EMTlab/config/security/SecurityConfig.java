@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CustomUserDetailsService customUserDetailsService;
     @Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
+
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
@@ -42,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
+
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -79,8 +81,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .permitAll()
                 .antMatchers("/auth/**")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/polls/**", "/users/**")
-                .permitAll()
+//                .antMatchers(HttpMethod.GET, "/polls/**", "/users/**")
+//                .permitAll()
+                .antMatchers("/admin/**").access("hasAuthority('ROLE_ADMIN')")
+                .antMatchers("/manager/**").access("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_MANAGER')")
+                .antMatchers("/branches/**").access("hasAuthority('ROLE_ADMIN')")
                 .anyRequest()
                 .authenticated();
 
